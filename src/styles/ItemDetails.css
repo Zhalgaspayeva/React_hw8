@@ -1,0 +1,10 @@
+.item-details {
+    text-align: center;
+  }
+  
+  .item-details img {
+    border-radius: 10px;
+    width: 200px;
+    margin-bottom: 20px;
+  }
+  

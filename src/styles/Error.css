@@ -1,0 +1,38 @@
+.error-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ffe5e5;
+  color: #b00020;
+  border: 1px solid #ffb3b3;
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin: 20px auto;
+  max-width: 400px;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  box-shadow: 0 3px 8px rgba(255, 0, 0, 0.1);
+  animation: fadeIn 0.4s ease;
+}
+
+.error-icon {
+  font-size: 18px;
+}
+
+.error-message {
+  margin: 0;
+  text-align: center;
+  line-height: 1.4;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

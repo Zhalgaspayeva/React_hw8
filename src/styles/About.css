@@ -1,0 +1,78 @@
+/* .about {
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  } */
+  .about-bg {
+    min-height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: gradientBG 10s ease infinite;
+    background: linear-gradient(-45deg, #1e90ff, #40e0d0, #32cd32);
+    background-size: 600% 600%;
+  }
+  
+  @keyframes gradientBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .about-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    max-width: 700px;
+    text-align: center;
+    margin-bottom: 100px;
+    width: 1000px;
+  }
+  
+  .about-title {
+    font-size: 40px;
+    font-weight: bold;
+    color: #1e90ff;
+    margin-bottom: 20px;
+  }
+  
+  .about-text {
+    font-size: 19px; 
+    line-height: 26px;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  .contacts-title {
+    font-size: 24px; 
+    margin-bottom: 10px;
+    color: #1e90ff;
+  }
+  
+  .contacts-list {
+    list-style: none;
+    padding: 0;
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .contacts-list li {
+    margin: 8px 0;
+  }
+  
+  .contacts-list a {
+    color: #1e90ff;
+    text-decoration: none;
+  }
+  
+  .contacts-list a:hover {
+    text-decoration: underline;
+  }
+  

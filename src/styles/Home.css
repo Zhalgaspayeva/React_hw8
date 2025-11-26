@@ -1,0 +1,13 @@
+.home {
+    text-align: center;
+    margin-top: 35px;
+    padding-bottom: 60px;
+  }
+  .home-image {       
+    max-width: 950px;
+    height: auto;        
+    margin-top: 5px;
+    border-radius: 10px;   
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
+    display: inline-block;
+  }

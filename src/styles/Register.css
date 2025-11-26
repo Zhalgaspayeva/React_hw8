@@ -1,0 +1,126 @@
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f4f8;
+    font-family: "Inter", sans-serif;
+    padding: 20px;
+  }
+
+  .auth-card {
+    width: 100%;
+    max-width: 320px;  
+    padding: 36px 28px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }
+
+  .auth-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  
+  .auth-header p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .auth-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }
+
+  .form-group {
+    width: 100%;
+    max-width: 280px; 
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-group label {
+    width: 100%;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 6px;
+  }
+  
+  .form-group input {
+    width: 100%;      
+    padding: 10px 14px;
+    font-size: 14px;
+  
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+  
+  .form-group input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+
+  .error-text {
+    color: #ef4444;
+    font-size: 13px;
+    text-align: center;
+    margin: -6px 0 12px;
+  }
+ 
+  .btn-primary {
+    width: 100%;        
+    max-width: 280px;   
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    background: #3b82f6;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    background: #2563eb;
+  }
+  
+  .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .auth-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: #6b7280;
+  }
+  
+  .auth-footer a {
+    color: #3b82f6;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .auth-footer a:hover {
+    color: #2563eb;
+  }
+  
