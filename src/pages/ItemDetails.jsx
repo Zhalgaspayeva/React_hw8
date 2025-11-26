@@ -73,7 +73,7 @@ import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchItemDetails } from "../features/items/itemsSlice";
+import { fetchItemById } from "../features/items/itemsSlice";
 import Spinner from "../components/Spinner";
 import ErrorBox from "../components/ErrorBox";
 import "../styles/Items.css";
@@ -82,18 +82,19 @@ const ItemDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { selectedItem, loading, error } = useSelector((state) => state.items);
+  const { selectedItem, loadingItem, errorItem } = useSelector(
+    (state) => state.items
+  );
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchItemDetails(id));
-    }
+    dispatch(fetchItemById(id));
   }, [dispatch, id]);
 
-  if (loading) return <Spinner />;
-  if (error) return <ErrorBox message={error} />;
+  if (loadingItem) return <Spinner />;
+  if (errorItem) return <ErrorBox message={errorItem} />;
+  if (!selectedItem) return <ErrorBox message="Character not found!" />;
 
-  if (!selectedItem) return null;
+  const char = selectedItem;
 
   return (
     <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
@@ -103,8 +104,8 @@ const ItemDetails = () => {
 
       <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
         <img
-          src={selectedItem.image}
-          alt={selectedItem.name}
+          src={char.image}
+          alt={char.name}
           style={{
             width: "200px",
             height: "200px",
@@ -113,18 +114,18 @@ const ItemDetails = () => {
           }}
         />
         <div>
-          <h2>{selectedItem.name}</h2>
+          <h2>{char.name}</h2>
           <p>
-            <strong>Status:</strong> {selectedItem.status}
+            <strong>Status:</strong> {char.status}
           </p>
           <p>
-            <strong>Species:</strong> {selectedItem.species}
+            <strong>Species:</strong> {char.species}
           </p>
           <p>
-            <strong>Gender:</strong> {selectedItem.gender}
+            <strong>Gender:</strong> {char.gender}
           </p>
           <p>
-            <strong>Origin:</strong> {selectedItem.origin?.name}
+            <strong>Origin:</strong> {char.origin?.name}
           </p>
         </div>
       </div>

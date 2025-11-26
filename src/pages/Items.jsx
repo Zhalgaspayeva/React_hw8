@@ -101,31 +101,34 @@
 // export default ItemsList;
 
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { fetchItems } from "../features/items/itemsSlice";
+import { fetchItems, setQuery, setPage } from "../features/items/itemsSlice";
 import Spinner from "../components/Spinner";
 import ErrorBox from "../components/ErrorBox";
 import "../styles/Items.css";
 
 const ItemsList = () => {
   const dispatch = useDispatch();
-  const { items, info, loadingList, errorList } = useSelector((state) => state.items);
+  const {
+    list,
+    loadingList,
+    errorList,
+    query,
+    page,
+    totalPages,
+  } = useSelector((state) => state.items);
 
-  const [query, setQuery] = useState("rick");
-  const [page, setPage] = useState(1);
-
-  // Загружаем список при изменении query или page
   useEffect(() => {
-    dispatch(fetchItems({ name: query, page }));
+    dispatch(fetchItems({ query, page }));
   }, [dispatch, query, page]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setPage(1);
-    dispatch(fetchItems({ name: query || "rick", page: 1 }));
+    dispatch(setPage(1));
+    dispatch(fetchItems({ query, page: 1 }));
   };
 
   return (
@@ -137,7 +140,7 @@ const ItemsList = () => {
           type="text"
           placeholder="Enter name..."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => dispatch(setQuery(e.target.value))}
           className="search-input"
         />
         <button type="submit" className="search-button">
@@ -148,10 +151,10 @@ const ItemsList = () => {
       {loadingList && <Spinner />}
       {errorList && <ErrorBox message={errorList} />}
 
-      {!loadingList && !errorList && (
+      {!loadingList && !errorList && list.length > 0 && (
         <>
           <div className="characters-grid">
-            {items.map((char) => (
+            {list.map((char) => (
               <Link
                 key={char.id}
                 to={`/items/${char.id}`}
@@ -164,24 +167,28 @@ const ItemsList = () => {
             ))}
           </div>
 
-          {/* Pagination */}
-          {info && (
-            <div className="pagination">
-              <button disabled={page === 1} onClick={() => setPage(page - 1)}>
-                ⬅️ Prev
-              </button>
-              <span>
-                Page {page} of {info.pages}
-              </span>
-              <button
-                disabled={page === info.pages}
-                onClick={() => setPage(page + 1)}
-              >
-                Next ➡️
-              </button>
-            </div>
-          )}
+          <div className="pagination">
+            <button
+              disabled={page === 1}
+              onClick={() => dispatch(setPage(page - 1))}
+            >
+              ⬅️ Prev
+            </button>
+            <span>
+              Page {page} of {totalPages}
+            </span>
+            <button
+              disabled={page === totalPages}
+              onClick={() => dispatch(setPage(page + 1))}
+            >
+              Next ➡️
+            </button>
+          </div>
         </>
+      )}
+
+      {!loadingList && !errorList && list.length === 0 && (
+        <ErrorBox message="No characters found!" />
       )}
     </div>
   );

@@ -1,26 +1,26 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { searchCharacter, searchDetails } from "../../services/itemsService";
 
-// 🔍 Загрузка списка персонажей
+// 🔍 Получить список персонажей
 export const fetchItems = createAsyncThunk(
   "items/fetchItems",
-  async ({ name, page }, { rejectWithValue }) => {
+  async ({ query = "rick", page = 1 }, { rejectWithValue }) => {
     try {
-      const data = await searchCharacter(name, page);
-      return data; // { info, results }
+      const data = await searchCharacter(query, page);
+      return data;
     } catch (err) {
       return rejectWithValue("Failed to load characters");
     }
   }
 );
 
-// 🔎 Загрузка деталей по ID
-export const fetchItemDetails = createAsyncThunk(
-  "items/fetchItemDetails",
+// 🔎 Получить детали персонажа
+export const fetchItemById = createAsyncThunk(
+  "items/fetchItemById",
   async (id, { rejectWithValue }) => {
     try {
       const data = await searchDetails(id);
-      return data; // объект персонажа
+      return data;
     } catch (err) {
       return rejectWithValue("Character not found");
     }
@@ -29,54 +29,59 @@ export const fetchItemDetails = createAsyncThunk(
 
 const itemsSlice = createSlice({
   name: "items",
-
   initialState: {
-    list: [],           // список персонажей
-    info: null,         // пагинация из Rick&Morty API
-    details: null,      // выбранный персонаж
-    loadingList: false, // загрузка списка
-    loadingDetails: false, // загрузка деталей
+    list: [],
+    selectedItem: null,
+    loadingList: false,
+    loadingItem: false,
     errorList: null,
-    errorDetails: null,
+    errorItem: null,
+    query: "",
+    page: 1,
+    totalPages: 1,
   },
-
-  reducers: {},
-
+  reducers: {
+    setQuery(state, action) {
+      state.query = action.payload;
+    },
+    setPage(state, action) {
+      state.page = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      // ===========================
-      // 📌 FETCH LIST
-      // ===========================
+      // ===================== LIST =====================
       .addCase(fetchItems.pending, (state) => {
         state.loadingList = true;
         state.errorList = null;
       })
       .addCase(fetchItems.fulfilled, (state, action) => {
         state.loadingList = false;
-        state.list = action.payload.results;
-        state.info = action.payload.info;
+        state.list = action.payload.results || [];
+        state.totalPages = action.payload.info?.pages || 1;
       })
       .addCase(fetchItems.rejected, (state, action) => {
         state.loadingList = false;
         state.errorList = action.payload;
+        state.list = [];
       })
 
-      // ===========================
-      // 📌 FETCH DETAILS
-      // ===========================
-      .addCase(fetchItemDetails.pending, (state) => {
-        state.loadingDetails = true;
-        state.errorDetails = null;
+      // ===================== DETAILS =====================
+      .addCase(fetchItemById.pending, (state) => {
+        state.loadingItem = true;
+        state.errorItem = null;
       })
-      .addCase(fetchItemDetails.fulfilled, (state, action) => {
-        state.loadingDetails = false;
-        state.details = action.payload;
+      .addCase(fetchItemById.fulfilled, (state, action) => {
+        state.loadingItem = false;
+        state.selectedItem = action.payload;
       })
-      .addCase(fetchItemDetails.rejected, (state, action) => {
-        state.loadingDetails = false;
-        state.errorDetails = action.payload;
+      .addCase(fetchItemById.rejected, (state, action) => {
+        state.loadingItem = false;
+        state.errorItem = action.payload;
+        state.selectedItem = null;
       });
   },
 });
 
+export const { setQuery, setPage } = itemsSlice.actions;
 export default itemsSlice.reducer;
